@@ -1,0 +1,46 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls static admin_modify %}
+
+{% block title %}Import Excel File{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">Home</a>
+    &rsaquo; <a href="{% url 'admin:cards_card_changelist' %}">Cards</a>
+    &rsaquo; Import Excel File
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="module aligned">
+    <h1>Import Cards from Excel File</h1>
+
+    <div class="form-row">
+        <div class="help">
+            <p><strong>Excel file format requirements:</strong></p>
+            <ul>
+                <li><strong>card_number:</strong> Card number (e.g., 8600 1234 5678 9012)</li>
+                <li><strong>expire:</strong> Expiration date in various formats (12/24, 2024-12, 12.2024, etc.)</li>
+                <li><strong>phone:</strong> Phone number (99 973 03 03, 973-03-03, or empty)</li>
+                <li><strong>status:</strong> active, inactive, or expired</li>
+                <li><strong>balance:</strong> Balance amount (0 to 1,200,000,000 UZS)</li>
+            </ul>
+        </div>
+    </div>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-row">
+            <div>
+                <label for="excel_file">Excel File:</label>
+                <input type="file" name="excel_file" id="excel_file" accept=".xlsx,.xls" required>
+            </div>
+        </div>
+
+        <div class="submit-row">
+            <input type="submit" value="Import Cards" class="default">
+            <a href="{% url 'admin:cards_card_changelist' %}" class="button cancel-link">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
